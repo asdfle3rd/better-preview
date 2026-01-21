@@ -1,0 +1,8 @@
+.DS_Store
+npm-debug.log
+yarn-error.log
+.phpunit.result.cache
+composer.phar
+/node_modules
+/build
+/vendor

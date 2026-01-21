@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "better-preview-plugin/gutenberg-preview-block",
+	"version": "0.1.0",
+	"title": "BetterPreview Block",
+	"category": "widgets",
+	"icon": "admin-appearance",
+	"description": "A block for the BetterPreview Plugin.",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "better-preview-plugin",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

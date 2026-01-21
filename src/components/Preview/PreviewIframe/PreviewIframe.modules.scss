@@ -1,0 +1,10 @@
+.iframe {
+	/* Resets all properties (border, margin, padding, etc.) to their default values */
+	all: initial !important;
+	/* You usually need to re-apply basic display logic after resetting */
+	display: block !important;
+	width: 100% !important;
+	height: 100% !important;
+	border: none !important;
+	/* explicitly remove the default ugly border */
+}

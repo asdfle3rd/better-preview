@@ -1,0 +1,122 @@
+#!/bin/bash
+set -e
+
+# Configuration
+PLUGIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+TEST_ENV_ROOT="/tmp/better-preview-plugin-tests"
+DOLT_PORT=3307
+DOLT_BIN="$TEST_ENV_ROOT/dolt/bin/dolt"
+DOLT_REPO_DIR="$TEST_ENV_ROOT/dolt_data"
+PID_FILE="$TEST_ENV_ROOT/dolt.pid"
+
+# Export env vars for setup script and phpunit
+export WP_TEST_ENV_DIR="$TEST_ENV_ROOT"
+export DOLT_PORT="$DOLT_PORT"
+export WP_TESTS_DIR="$TEST_ENV_ROOT/wordpress-tests-lib"
+export WP_CORE_DIR="$TEST_ENV_ROOT/wordpress"
+
+# Helper to reliably kill a process
+kill_process_and_wait() {
+    local pid=$1
+    if [ -z "$pid" ]; then return; fi
+
+    if kill -0 "$pid" 2>/dev/null; then
+        echo "Stopping Dolt server (PID: $pid)..."
+        kill "$pid" 2>/dev/null || true
+
+        local count=0
+        while kill -0 "$pid" 2>/dev/null; do
+            # Check if zombie (defunct)
+            # 'ps -o stat=' returns the state code. Z means zombie.
+            if ps -o stat= -p "$pid" 2>/dev/null | grep -q 'Z'; then
+                break
+            fi
+
+            sleep 0.5
+            count=$((count+1))
+            if [ "$count" -ge 20 ]; then # Wait up to 10 seconds
+                echo "Force killing Dolt server..."
+                kill -9 "$pid" 2>/dev/null || true
+                break
+            fi
+        done
+    fi
+}
+
+# 1. Setup Environment
+echo ">>> Setting up Test Environment..."
+bash "$PLUGIN_DIR/bin/setup-application-env.sh"
+
+# 2. Start Dolt SQL Server
+echo ">>> Starting Dolt SQL Server on port $DOLT_PORT..."
+
+"$DOLT_BIN" sql-server --host 127.0.0.1 --port "$DOLT_PORT" --data-dir "$DOLT_REPO_DIR" > "$TEST_ENV_ROOT/dolt-server.log" 2>&1 &
+SERVER_PID=$!
+
+# Function to cleanup server on exit
+cleanup() {
+    echo ""
+    echo ">>> Shutting down..."
+    kill_process_and_wait "$SERVER_PID"
+}
+trap cleanup EXIT
+
+# Wait for server to be ready
+echo "Waiting for server to accept connections..."
+MAX_RETRIES=20
+COUNT=0
+while ! "$DOLT_BIN" --data-dir "$DOLT_REPO_DIR" sql -h 127.0.0.1 -P "$DOLT_PORT" -u root -q "SELECT 1" >/dev/null 2>&1; do
+    sleep 1
+    COUNT=$((COUNT+1))
+    if [ "$COUNT" -ge "$MAX_RETRIES" ]; then
+        echo "Error: Dolt server failed to start. Check $TEST_ENV_ROOT/dolt-server.log"
+        cat "$TEST_ENV_ROOT/dolt-server.log"
+        exit 1
+    fi
+done
+echo "Server is ready."
+sleep 2
+
+# 2.5. Install Dependencies if needed
+if [ ! -d "$PLUGIN_DIR/vendor" ]; then
+    echo ">>> Vendor directory not found. Checking for Composer..."
+    
+    if command -v composer &> /dev/null; then
+        echo "Composer found (global). Installing dependencies..."
+        cd "$PLUGIN_DIR"
+        composer install --no-interaction --prefer-dist
+        cd - > /dev/null
+    else
+        echo "Composer not found globally. Downloading composer.phar..."
+        cd "$PLUGIN_DIR"
+        if [ ! -f "composer.phar" ]; then
+            EXPECTED_CHECKSUM="$(php -r 'copy("https://composer.github.io/installer.sig", "php://stdout");')"
+            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+            ACTUAL_CHECKSUM="$(php -r "echo hash_file('sha384', 'composer-setup.php');")"
+
+            if [ "$EXPECTED_CHECKSUM" != "$ACTUAL_CHECKSUM" ]; then
+                >&2 echo 'ERROR: Invalid installer checksum'
+                rm composer-setup.php
+                exit 1
+            fi
+
+            php composer-setup.php --quiet
+            rm composer-setup.php
+        fi
+        
+        if [ -f "composer.phar" ]; then
+            echo "Installing dependencies using local composer.phar..."
+            php composer.phar install --no-interaction --prefer-dist
+        else
+            echo "Error: Failed to download composer.phar."
+            exit 1
+        fi
+        cd - > /dev/null
+    fi
+fi
+
+# 3. Run Tests
+echo ">>> Running Tests..."
+"$PLUGIN_DIR/vendor/bin/phpunit" "$@"
+kill_process_and_wait "$SERVER_PID"
+

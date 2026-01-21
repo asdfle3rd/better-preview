@@ -1,0 +1,100 @@
+:root {
+  --container-width-min: 300px;
+  --container-width-pref: 50vw;
+  --container-width-max: 600px;
+  --list-max-height-min: 200px;
+  --list-max-height-pref: 40vh;
+  --list-max-height-max: 500px;
+  --list-padding: 0px;
+  --scrollbar-width: 8px;
+  --background-color: #10101010;
+  --thumb-color: #271e37;
+  --item-bg-color: inherit;
+  --item-selected-bg-color: #10101010;
+  --item-border-radius: 8px;
+  --item-border-style: solid;
+  --item-border-width: 0px;
+  --item-padding-vertical: .5em;
+  --item-padding-horizontal: 1em;
+  --text-color: black;
+  --top-gradient-height-min: 30px;
+  --top-gradient-height-pref: 5vh;
+  --top-gradient-height-max: 70px;
+  --bottom-gradient-height-min: 50px;
+  --bottom-gradient-height-pref: 10vh;
+  --bottom-gradient-height-max: 150px;
+  --transition-speed: 0.3s;
+}
+
+.scrollListContainer {
+  position: relative;
+  width: clamp(var(--container-width-min), var(--container-width-pref), var(--container-width-max));
+}
+
+.scrollList {
+  max-height: clamp(var(--list-max-height-min), var(--list-max-height-pref), var(--list-max-height-max));
+  overflow-y: auto;
+  padding: var(--list-padding);
+
+  &::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--background-color);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--thumb-color);
+    border-radius: 4px;
+  }
+}
+
+.noScrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.item {
+  background-color: var(--item-bg-color);
+  border-radius: var(--item-border-radius);
+  border-style: var(--item-border-style);
+  border-width: var(--item-border-width);
+  margin-bottom: var(--item-margin-bottom);
+
+  &.selected {
+    background-color: var(--item-selected-bg-color);
+  }
+}
+
+.itemText {
+  color: var(--text-color);
+  padding: var(--item-padding-vertical) var(--item-padding-horizontal);
+  margin: 0;
+}
+
+.topGradient,
+.bottomGradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-speed) ease;
+}
+
+.topGradient {
+  top: 0;
+  height: clamp(var(--top-gradient-height-min), var(--top-gradient-height-pref), var(--top-gradient-height-max));
+  background: linear-gradient(to bottom, var(--background-color), transparent);
+}
+
+.bottomGradient {
+  bottom: 0;
+  height: clamp(var(--bottom-gradient-height-min), var(--bottom-gradient-height-pref), var(--bottom-gradient-height-max));
+  background: linear-gradient(to top, var(--background-color), transparent);
+}
+

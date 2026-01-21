@@ -1,0 +1,14 @@
+.closeButton {
+	justify-self: end;
+	backdrop-filter: blur(10px);
+
+	&:active {
+		transform: scale(0.95);
+		transition-duration: 0.5s;
+	}
+
+	&.mobile {
+		width: max-content;
+		justify-content: center;
+	}
+}

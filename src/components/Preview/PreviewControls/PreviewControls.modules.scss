@@ -1,0 +1,22 @@
+.mainContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 8px;
+	height: 100%;
+
+	@media (max-width: 1024px) {
+		flex-direction: column;
+		justify-content: center;
+		gap: 2px;
+		height: auto;
+	}
+}
+
+.navContainer {
+	display: flex;
+	height: min-content;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-evenly;
+}

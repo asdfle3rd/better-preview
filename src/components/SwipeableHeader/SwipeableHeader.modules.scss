@@ -1,0 +1,119 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 6px;
+  height: clamp(50px, 7vh, 200px);
+  display: flex;
+
+  &.stacked {
+    background: white;
+    height: auto;
+    min-height: min-content;
+    flex-direction: column;
+    align-items: center;
+
+    .startSection,
+    .centerSection,
+    .endSection {
+      width: 100%;
+      justify-content: center;
+      height: auto;
+    }
+
+    .startSection .contentWrapper .endSection {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .centerSection {
+      min-height: 100%;
+    }
+
+    .contentWrapper {
+      height: auto;
+      width: 100%;
+      justify-content: center;
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    height: auto;
+    min-height: clamp(50px, 7vh, 200px);
+  }
+
+  justify-content: space-between;
+  align-items: center;
+  z-index: 3;
+  transition: transform 400ms cubic-bezier(0.215, 0.610, 0.355, 1) ;
+  border: none;
+  backdrop-filter: blur(200px);
+  transform: translateY(-100%);
+
+  &.visible {
+    transform: translateY(0%);
+    border: 1px solid #101010;
+  }
+
+  &.pinned {
+    transform: translateY(0%);
+    border: 2px solid #007cba;
+    backdrop-filter: unset;
+  }
+
+  &.root-entity {
+    border-bottom: none !important;
+  }
+
+  button,
+  :global(.components-button) {
+    transition: transform 0.2s ease;
+
+    &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    &:active {
+      transform: scale(0.92);
+      transition-duration: 0.05s;
+    }
+  }
+}
+
+.centerSection {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+
+  @media (max-width: 1024px) {
+    height: auto;
+    min-height: 100%;
+  }
+}
+
+.startSection {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.endSection {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.contentWrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  @media (max-width: 1024px) {
+    height: auto;
+    width: 100%;
+    justify-content: center;
+  }
+}

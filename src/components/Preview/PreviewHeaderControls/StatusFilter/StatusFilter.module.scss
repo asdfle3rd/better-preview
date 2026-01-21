@@ -1,0 +1,33 @@
+.container {
+	display: flex;
+	gap: 4px;
+
+	@media (max-width: 1024px) and (orientation: landscape) {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	@media (max-width: 1024px) and (orientation: portrait) {
+		flex-direction: column;
+		align-items: center;
+	}
+}
+
+.button {
+	padding: 0 8px;
+	min-width: unset;
+	outline: none;
+	box-shadow: none;
+	background: transparent;
+	color: grey;
+	transition: color 0.2s ease;
+
+	&.active {
+		color: green;
+	}
+
+	&:focus {
+		box-shadow: none;
+		outline: none;
+	}
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Better Preview Plugin">
+	<description>Ruleset for Better Preview Plugin</description>
+
+	<!-- Include the root ruleset -->
+	<rule ref="../../../phpcs.xml"/>
+
+	<!-- Define the text domain for this plugin -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="better-preview-plugin"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Define the prefix for this plugin -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="better_preview_plugin"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Check only this directory -->
+	<file>.</file>
+</ruleset>

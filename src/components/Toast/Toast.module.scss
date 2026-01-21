@@ -1,0 +1,180 @@
+/* Toast.module.scss */
+:root {
+  --toast-width: 360px;
+  --toast-bg: #ffffff;
+  --toast-text: #1f2937;
+  --toast-radius: 12px;
+  --toast-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  /* Colors */
+  --t-success: #10b981;
+  --t-error: #ef4444;
+  --t-info: #3b82f6;
+  --t-warning: #f59e0b;
+}
+
+.toastContainer {
+  position: fixed;
+  z-index: 1000000;
+  display: flex;
+  gap: 12px;
+  pointer-events: none;
+  /* Reset defaults */
+  top: auto;
+  bottom: auto;
+  left: auto;
+  right: auto;
+}
+
+/* Positions */
+.topLeft {
+  top: 24px;
+  left: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.topCenter {
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column;
+  align-items: center;
+}
+
+.topRight {
+  top: 24px;
+  right: 24px;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.middleLeft {
+  top: 50%;
+  left: 24px;
+  transform: translateY(-50%);
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  align-items: center;
+}
+
+.middleRight {
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%);
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Bottom positions stack upwards (column-reverse) */
+.bottomLeft {
+  bottom: 24px;
+  left: 24px;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+
+.bottomCenter {
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.bottomRight {
+  bottom: 24px;
+  right: 24px;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+}
+
+.toast {
+  position: relative;
+  width: var(--toast-width);
+  background: var(--toast-bg);
+  color: var(--toast-text);
+  padding: 16px;
+  border-radius: var(--toast-radius);
+  box-shadow: var(--toast-shadow);
+  display: flex;
+  flex-direction: column;
+	max-width: 80vmin;
+  overflow: hidden;
+  pointer-events: auto;
+  /* Smooth entry/exit */
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  /* Ensure it has a starting scale */
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Content Layout */
+.toastContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.toastMessage {
+  flex: 1;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.toastClose {
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.4;
+  padding: 4px;
+  transition: opacity 0.2s;
+}
+.toastClose:hover { opacity: 1; }
+
+/* Progress Bar */
+.toastProgressTrack {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(0,0,0,0.05);
+}
+
+.toastProgressBar {
+  height: 100%;
+  background: rgba(0,0,0,0.2);
+  width: 100%;
+  transform-origin: left;
+  animation: linear forwards;
+  animation-name: shrink;
+}
+
+.toast.paused .toastProgressBar {
+  animation-play-state: paused;
+}
+
+ @keyframes shrink {
+  to { transform: scaleX(0); }
+}
+
+/* Exit Animation */
+.toast.exiting {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+/* Status Indicators */
+.toastSuccess .toastProgressBar { background: var(--t-success); }
+.toastError .toastProgressBar { background: var(--t-error); }
+.toastInfo .toastProgressBar { background: var(--t-info); }
+.toastWarning .toastProgressBar { background: var(--t-warning); }

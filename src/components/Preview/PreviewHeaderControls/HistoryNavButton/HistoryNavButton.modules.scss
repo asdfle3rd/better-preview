@@ -1,0 +1,8 @@
+/* No specific styles needed yet, but good for future scoping */
+.historyButton {
+  transform: scale(1.55);
+  &:active {
+    transform: scale(0.95);
+    transition-duration: 0.5s;
+  }
+}
