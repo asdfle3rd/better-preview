@@ -1,0 +1,75 @@
+---
+import { getImage } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Main from '../components/Main';
+import { type ImageAsset } from "../components/ImageContext";
+
+// Import feature images
+import isolationImg from '../assets/isolation.png';
+import mobileImg from '../assets/mobile.png';
+import revisionsImg from '../assets/revisions.png';
+import technicalImg from '../assets/technical.png';
+import themeImg from '../assets/theme.png';
+import timeToInteractiveImg from '../assets/time-to-interactive.png';
+import workflowImg from '../assets/workflow.png';
+
+const widths = [480, 768, 1024, 1920];
+
+// Helper to generate responsive image data
+const generateResponsiveImage = async (source: ImageMetadata) => {
+  const optimized = await Promise.all(widths.map(w => getImage({
+    src: source,
+    width: w,
+    format: 'webp',
+  })));
+
+  const srcSet = optimized.map((img, i) => `${img.src} ${widths[i]}w`).join(', ');
+  const src = optimized[optimized.length - 1].src;
+
+  return { src, srcSet } as ImageAsset;
+};
+
+// Fetch all features and sort them or apply any specific ordering
+const features = (await getCollection('features'))
+  .map(feature => ({
+    id: feature.id,
+    slug: feature.slug,
+    data: feature.data,
+    body: feature.body,
+  }))
+  .filter(feature => feature.data.id > 0)
+  .sort((a, b) => a.data.id - b.data.id);
+
+// Generate all image assets
+const isolationAsset = await generateResponsiveImage(isolationImg);
+const mobileAsset = await generateResponsiveImage(mobileImg);
+const revisionsAsset = await generateResponsiveImage(revisionsImg);
+const technicalAsset = await generateResponsiveImage(technicalImg);
+const themeAsset = await generateResponsiveImage(themeImg);
+const timeToInteractiveAsset = await generateResponsiveImage(timeToInteractiveImg);
+const workflowAsset = await generateResponsiveImage(workflowImg);
+
+
+const imageDictionary = {
+  isolation: isolationAsset,
+  mobile: mobileAsset,
+  revisions: revisionsAsset,
+  technical: technicalAsset,
+  theme: themeAsset,
+  'time-to-interactive': timeToInteractiveAsset,
+  workflow: workflowAsset,
+};
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Better Preview | Documentation</title>
+	</head>
+	<body>
+		  <Main features={features} images={imageDictionary} client:only="react"/>
+	</body>
+</html>
