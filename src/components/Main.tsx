@@ -92,7 +92,7 @@ const Main: React.FC<MainProps> = ({ features, images }) => {
 
             <div className="hero-hint grid grid-rows-[repeat(3, 1fr)] row-start-3 row-span-1 flex flex-col items-center justify-between h-full group">
               <div className="animate-bounce row-start-1 row-span-1 ">
-                <div className="text-sm text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-2 group-hover:text-accent dark:group-hover:text-silver-plat transition-colors">
+                <div className="text-sm text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 group-hover:text-slate-950 dark:group-hover:text-silver-plat transition-colors">
                   Next-Gen UX
                 </div>
                 <div className="grid grid-cols-2 gap-2 w-24 mx-auto opacity-50 mb-4">
@@ -103,10 +103,10 @@ const Main: React.FC<MainProps> = ({ features, images }) => {
                 </div>
               </div>
 
-              <div className="text-sm text-slate-500 row-start-3 row-span-1 dark:text-slate-400 uppercase tracking-widest mb-2 group-hover:text-accent dark:group-hover:text-silver-plat transition-colors">
+              <div className="text-sm text-slate-500 row-start-3 row-span-1 dark:text-slate-400 uppercase tracking-widest mb-2 group-hover:text-slate-950 dark:group-hover:text-silver-plat transition-colors">
                 Click to scroll
                 <svg
-                  className="w-6 h-6 text-slate-500 dark:text-slate-400 mx-auto group-hover:text-accent dark:group-hover:text-silver-plat transition-colors"
+                  className="w-6 h-6 text-slate-500 dark:text-slate-400 mx-auto group-hover:text-slate-950 dark:group-hover:text-silver-plat transition-colors"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
