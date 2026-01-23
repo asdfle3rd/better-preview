@@ -30,6 +30,7 @@ export default defineConfig({
   site: "https://asdfle3rd.github.io",
   base: "/better-preview",
   output: "static",
+  outDir: "docs",
   image: {
     service: {
       entrypoint: "astro/assets/services/sharp",
