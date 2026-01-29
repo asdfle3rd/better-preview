@@ -17,7 +17,7 @@ import unusedImports from 'eslint-plugin-unused-imports';
 // import tseslint from 'typescript-eslint';
 
 // --- Compatibility Utility ---
-// This is the key to using the "old" @wordpress/eslint-plugin
+// This is the key to using the "old" @wordpress/eslint-plugin 
 // config in the new "flat" config system.
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -54,19 +54,19 @@ export default defineConfig([
         parser: tsParser,
         parserOptions: {
             // Essential: Tells the parser where your tsconfig is
-            project: '../../../../tsconfig.json',
+            project: '../../../../tsconfig.json', 
             ecmaFeatures: {
                 jsx: true,
             },
         },
         },
-
+        
         // Plugins and Rules specific to TypeScript
         plugins: {
             '@typescript-eslint': tsEslint,
             'unused-imports': unusedImports,
         },
-
+        
         // Extend recommended TypeScript rules
         rules: {
         ...tsEslint.configs.recommended.rules,
@@ -74,7 +74,7 @@ export default defineConfig([
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-explicit-any': 'warn',
         // Enforce the use of 'type' over 'interface' where possible (preference)
-        '@typescript-eslint/consistent-type-definitions': ['warn', 'type'],
+        '@typescript-eslint/consistent-type-definitions': ['warn', 'type'], 
         // Prevent unused variables, excluding those starting with _
         '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
         'unused-imports/no-unused-imports': 'error',

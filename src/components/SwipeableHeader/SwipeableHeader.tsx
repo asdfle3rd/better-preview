@@ -88,7 +88,6 @@ const SwipeableHeader = forwardRef<HTMLDivElement, SwipeableHeaderProps>(
 		};
 
 		const handleTouchStart = (e: TouchEvent) => {
-			console.log('touch start', isMobile);
 			if (!isMobile) {
 				return;
 			}
