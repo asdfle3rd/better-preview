@@ -16,7 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once plugin_dir_path( __FILE__ ) . 'admin.php';
-require_once plugin_dir_path( __FILE__ ) . 'includes/revisions.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/endpoints/url-to-id.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/endpoints/id-to-html.php';
 
 /**
  * Enqueue scripts for the editor.
