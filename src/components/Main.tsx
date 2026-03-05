@@ -91,7 +91,7 @@ const Main: React.FC<MainProps> = ({ features, images }) => {
             </div>
 
             <div className="hero-hint grid grid-rows-[repeat(3, 1fr)] row-start-3 row-span-1 flex flex-col items-center justify-between h-full group">
-              <div className="animate-bounce row-start-1 row-span-1 ">
+              <div className="row-start-1 row-span-1 ">
                 <div className="text-sm text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 group-hover:text-slate-950 dark:group-hover:text-silver-plat transition-colors">
                   Next-Gen UX
                 </div>
