@@ -1,43 +1,19 @@
-# Astro Starter Kit: Minimal
+**Better Preview: Streamline your Preview Experience**
 
-```sh
-npm create astro@latest -- --template minimal
-```
+## Early Alpha Preview and Revision Review Plugin for Wordpress
+Quick introduction at [Better Preview](https://asdfle3rd.github.io/better-preview/)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-## 🚀 Project Structure
+This Plugin aims to enable you to preview, review and navigate your current and past Wordpress edits.
+No need to switch to incognito tabs or other browsers to view your site as a first time visitor.
+Render every published version of your WP-Site.
 
-Inside of your Astro project, you'll see the following folders and files:
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Key features include:
+- **Past Revision Review**: Effortlessly navigate through your post's or page's history to see how it looked at different stages.
+- **Mobile-First Design**: Experience a seamless mobile preview with a swipeable header and touch-ready controls for maximum screen real estate.
+- **Time-to-Interactive (TTI) Measurement**: Every navigation measures your page's TTI, giving you instant insights into your content's load speed.
+- **Theme Compatibility**: Seamless integration with your existing theme and plugins, ensuring an accurate preview without requiring modifications.
+- **Robust Technical Foundation**: Built with React and TypeScript for a stable, performant user interface, and integrating with standard WordPress REST APIs.
+- **Workflow Power Tools**: Enhance your editorial workflow with a history stack, fuzzy search, cache flush button, and status filters for draft versus published content toggling.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
